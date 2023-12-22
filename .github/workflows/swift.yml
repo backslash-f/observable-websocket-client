@@ -1,11 +1,22 @@
 ---
 name: "CI"
-on: [push]
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
     runs-on: macos-13
     steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '15.1'
       - uses: actions/checkout@v4
       - name: Run Tests
         run: swift test -v
