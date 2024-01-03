@@ -46,7 +46,7 @@ public extension WebSocketService {
                 @unknown default:
                     fatalError()
                 }
-                
+
                 // Listen for the next message.
                 self.receiveMessage()
 
