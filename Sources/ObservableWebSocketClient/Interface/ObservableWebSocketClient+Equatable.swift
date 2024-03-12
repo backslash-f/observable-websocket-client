@@ -7,10 +7,9 @@
 
 import Foundation
 
-extension ObservableWebSocketClient: Equatable {
+extension ObservableWebSocketClient {
     public static func == (lhs: ObservableWebSocketClient,
                            rhs: ObservableWebSocketClient) -> Bool {
-        lhs.websocketURL == rhs.websocketURL &&
-        lhs.message == rhs.message
+        lhs.id == rhs.id
     }
 }
