@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Defines a `Codable` wrapper for `Error`.
 public struct CodableError: Error, Codable, Equatable {
     public let errorType: String
     public let message: String
