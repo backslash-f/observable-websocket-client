@@ -3,22 +3,22 @@
 import PackageDescription
 
 let package = Package(
-    name: "SwiftTraderWebSocket",
+    name: "ObservableWebSocketClient",
     platforms: [
         .iOS(.v17),
         .macOS(.v14)
     ],
     products: [
         .library(
-            name: "SwiftTraderWebSocket",
-            targets: ["SwiftTraderWebSocket"]
+            name: "ObservableWebSocketClient",
+            targets: ["ObservableWebSocketClient"]
         )
     ],
     targets: [
-        .target(name: "SwiftTraderWebSocket"),
+        .target(name: "ObservableWebSocketClient"),
         .testTarget(
-            name: "SwiftTraderWebSocketTests",
-            dependencies: ["SwiftTraderWebSocket"]
+            name: "ObservableWebSocketClientTests",
+            dependencies: ["ObservableWebSocketClient"]
         )
     ]
 )

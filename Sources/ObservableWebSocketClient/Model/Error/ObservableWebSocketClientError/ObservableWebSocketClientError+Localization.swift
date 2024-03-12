@@ -1,5 +1,5 @@
 //
-//  SwiftTraderWebSocketError+Localization.swift
+//  ObservableWebSocketClientError+Localization.swift
 //
 //
 //  Created by Fernando Fernandes on 28.02.24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension SwiftTraderWebSocketError: LocalizedError {
+extension ObservableWebSocketClientError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .decodingMessage:

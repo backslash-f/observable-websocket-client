@@ -25,7 +25,7 @@ public extension CodableWebSocketMessage {
             let messageData = try container.decode(Data.self, forKey: .messageData)
             message = .data(messageData)
         default:
-            throw SwiftTraderWebSocketError.decodingMessage
+            throw ObservableWebSocketClientError.decodingMessage
         }
     }
 
@@ -40,7 +40,7 @@ public extension CodableWebSocketMessage {
             try container.encode("data", forKey: .messageType)
             try container.encode(messageData, forKey: .messageData)
         @unknown default:
-            throw SwiftTraderWebSocketError.encodingMessage
+            throw ObservableWebSocketClientError.encodingMessage
         }
     }
 }

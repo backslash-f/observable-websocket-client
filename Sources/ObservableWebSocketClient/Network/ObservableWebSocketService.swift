@@ -1,5 +1,5 @@
 //
-//  WebSocketService.swift
+//  ObservableWebSocketService.swift
 //
 //
 //  Created by Fernando Fernandes on 02.01.24.
@@ -7,12 +7,12 @@
 
 import Foundation
 
-@Observable public final class WebSocketService {
+@Observable public final class ObservableWebSocketService {
     public var session = URLSession(configuration: .default)
 
     public var message: URLSessionWebSocketTask.Message?
 
-    public var error: SwiftTraderWebSocketError?
+    public var error: ObservableWebSocketClientError?
 
     private let websocketURL: URL
 
@@ -27,7 +27,7 @@ import Foundation
 
 // MARK: - Private
 
-private extension WebSocketService {
+private extension ObservableWebSocketService {
 
     func receiveMessage() {
         webSocketTask?.receive { result in
@@ -47,7 +47,7 @@ private extension WebSocketService {
 
 // MARK: - Private
 
-private extension WebSocketService {
+private extension ObservableWebSocketService {
     func initializeWebSocket() {
         webSocketTask = session.webSocketTask(with: websocketURL)
         webSocketTask?.resume()

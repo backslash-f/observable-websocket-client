@@ -1,5 +1,5 @@
 //
-//  WebSocketClient+Codable.swift
+//  ObservableWebSocketClient+Codable.swift
 //
 //
 //  Created by Fernando Fernandes on 06.03.24.
@@ -9,7 +9,7 @@ import Foundation
 
 /// Required for encoding/decoding an observable object class. Refer to:
 /// https://www.hackingwithswift.com/books/ios-swiftui/encoding-an-observableobject-class
-extension WebSocketClient: Codable {
+extension ObservableWebSocketClient: Codable {
     public enum CodingKeys: String, CodingKey {
         case websocketURL
         case message
@@ -27,7 +27,7 @@ extension WebSocketClient: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let websocketURL = try container.decode(URL.self, forKey: .websocketURL)
         let message = try container.decodeIfPresent(CodableWebSocketMessage.self, forKey: .message)
-        let error = try container.decodeIfPresent(SwiftTraderWebSocketError.self, forKey: .error)
+        let error = try container.decodeIfPresent(ObservableWebSocketClientError.self, forKey: .error)
         self.init(websocketURL: websocketURL, message: message, error: error)
     }
 }
