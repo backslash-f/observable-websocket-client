@@ -13,10 +13,10 @@ import Foundation
 public final class ObservableWebSocketClient: Identifiable, Equatable, Codable, ObservableObject {
 
     /// Publishes received messages after the connection is successfully established.
-    @Published public var codableMessage: CodableWebSocketMessage? = nil
+    @Published public var codableMessage: CodableWebSocketMessage?
 
     /// Publishes any error that may occur.
-    @Published public var error: ObservableWebSocketClientError? = nil
+    @Published public var error: ObservableWebSocketClientError?
 
 #warning("TODO: isConnected logic")
     /// Publishes whether the WebSocket is still valid/alive.

@@ -9,9 +9,9 @@ import Foundation
 
 public final class ObservableWebSocketService: ObservableObject {
 
-    @Published public var message: URLSessionWebSocketTask.Message? = nil
+    @Published public var message: URLSessionWebSocketTask.Message?
 
-    @Published public var error: ObservableWebSocketClientError? = nil
+    @Published public var error: ObservableWebSocketClientError?
 
     public var session = URLSession(configuration: .default)
 
