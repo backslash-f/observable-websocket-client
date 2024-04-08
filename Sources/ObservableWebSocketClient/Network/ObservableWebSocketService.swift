@@ -29,12 +29,12 @@ public final class ObservableWebSocketService: ObservableObject {
 // MARK: - Private
 
 private extension ObservableWebSocketService {
-    
+
     func initializeWebSocket() {
         webSocketTask = session.webSocketTask(with: websocketURL)
         webSocketTask?.resume()
     }
-    
+
     func receiveMessage() {
         webSocketTask?.receive { result in
             switch result {
@@ -42,7 +42,7 @@ private extension ObservableWebSocketService {
                 self.message = message
                 // Listen for the next message.
                 self.receiveMessage()
-                
+
             case .failure(let error):
                 let codableError = CodableError(error)
                 self.error = .receivingMessage(codableError)

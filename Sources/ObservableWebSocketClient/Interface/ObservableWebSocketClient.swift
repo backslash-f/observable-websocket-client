@@ -27,7 +27,7 @@ public final class ObservableWebSocketClient: Identifiable, Equatable, Codable, 
     public let websocketURL: URL
 
     private let service: ObservableWebSocketService
-    
+
     private var cancellables = Set<AnyCancellable>()
 
     /// Creates an `ObservableWebSocketClient` instance.
@@ -58,18 +58,18 @@ public final class ObservableWebSocketClient: Identifiable, Equatable, Codable, 
 
 extension ObservableWebSocketClient {
     func observeWebSocketConnection() {
-        
+
         // MARK: Message
-        
+
         service.$message.sink { [weak self] message in
             if let message {
                 self?.codableMessage = CodableWebSocketMessage(message: message)
             }
         }
         .store(in: &cancellables)
-        
+
         // MARK: Error
-        
+
         service.$error.sink { [weak self] error in
             if let error {
                 self?.error = error
