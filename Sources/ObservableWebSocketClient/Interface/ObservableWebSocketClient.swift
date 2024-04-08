@@ -5,23 +5,30 @@
 //  Created by Fernando Fernandes on 28.02.24.
 //
 
+import Combine
 import Foundation
 
 /// Establishes a WebSocket connection using the given `websocketURL`.
 /// Publishes received messages and errors.
-@Observable public final class ObservableWebSocketClient: Identifiable, Codable, Equatable {
+public final class ObservableWebSocketClient: Identifiable, Equatable, Codable, ObservableObject {
 
     /// Publishes received messages after the connection is successfully established.
-    public var message: CodableWebSocketMessage?
+    @Published public var codableMessage: CodableWebSocketMessage? = nil
 
     /// Publishes any error that may occur.
-    public var error: ObservableWebSocketClientError?
+    @Published public var error: ObservableWebSocketClientError? = nil
+
+#warning("TODO: isConnected logic")
+    /// Publishes whether the WebSocket is still valid/alive.
+    @Published public var isConnected: Bool = false
 
     public var id: UUID
 
     public let websocketURL: URL
 
     private let service: ObservableWebSocketService
+    
+    private var cancellables = Set<AnyCancellable>()
 
     /// Creates an `ObservableWebSocketClient` instance.
     ///
@@ -40,8 +47,34 @@ import Foundation
                 error: ObservableWebSocketClientError? = nil) {
         self.id = id
         self.websocketURL = websocketURL
-        self.message = message
+        self.codableMessage = message
         self.error = error
         self.service = ObservableWebSocketService(url: websocketURL)
+        observeWebSocketConnection()
+    }
+}
+
+// MARK: - Observation
+
+extension ObservableWebSocketClient {
+    func observeWebSocketConnection() {
+        
+        // MARK: Message
+        
+        service.$message.sink { [weak self] message in
+            if let message {
+                self?.codableMessage = CodableWebSocketMessage(message: message)
+            }
+        }
+        .store(in: &cancellables)
+        
+        // MARK: Error
+        
+        service.$error.sink { [weak self] error in
+            if let error {
+                self?.error = error
+            }
+        }
+        .store(in: &cancellables)
     }
 }
