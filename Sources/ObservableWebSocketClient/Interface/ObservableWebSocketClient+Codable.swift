@@ -21,7 +21,7 @@ extension ObservableWebSocketClient {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
         try container.encode(websocketURL, forKey: .websocketURL)
-        try container.encodeIfPresent(message, forKey: .message)
+        try container.encodeIfPresent(codableMessage, forKey: .message)
         try container.encodeIfPresent(error, forKey: .error)
     }
 
