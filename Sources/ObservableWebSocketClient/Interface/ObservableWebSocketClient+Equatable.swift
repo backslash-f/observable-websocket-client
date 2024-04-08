@@ -10,6 +10,10 @@ import Foundation
 extension ObservableWebSocketClient {
     public static func == (lhs: ObservableWebSocketClient,
                            rhs: ObservableWebSocketClient) -> Bool {
-        lhs.id == rhs.id
+        lhs.id == rhs.id &&
+        lhs.websocketURL == rhs.websocketURL &&
+        lhs.isConnected == rhs.isConnected &&
+        lhs.codableMessage == rhs.codableMessage &&
+        lhs.error == rhs.error
     }
 }
