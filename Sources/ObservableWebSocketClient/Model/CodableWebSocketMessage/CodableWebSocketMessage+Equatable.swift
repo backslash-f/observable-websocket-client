@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension CodableWebSocketMessage: Equatable {
+extension CodableWebSocketMessage {
     public static func == (lhs: CodableWebSocketMessage, rhs: CodableWebSocketMessage) -> Bool {
         switch (lhs.message, rhs.message) {
         case (.string(let lhsString), .string(let rhsString)):

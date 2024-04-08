@@ -8,6 +8,6 @@
 import Foundation
 
 /// Defines a `Codable` wrapper for `URLSessionWebSocketTask.Message`.
-public struct CodableWebSocketMessage: Codable {
+public struct CodableWebSocketMessage: Equatable, Codable {
     public let message: URLSessionWebSocketTask.Message
 }
