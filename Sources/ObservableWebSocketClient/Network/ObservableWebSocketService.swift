@@ -7,12 +7,13 @@
 
 import Foundation
 
-@Observable public final class ObservableWebSocketService {
+public final class ObservableWebSocketService: ObservableObject {
+
+    @Published public var message: URLSessionWebSocketTask.Message? = nil
+
+    @Published public var error: ObservableWebSocketClientError? = nil
+
     public var session = URLSession(configuration: .default)
-
-    public var message: URLSessionWebSocketTask.Message?
-
-    public var error: ObservableWebSocketClientError?
 
     private let websocketURL: URL
 
@@ -28,7 +29,12 @@ import Foundation
 // MARK: - Private
 
 private extension ObservableWebSocketService {
-
+    
+    func initializeWebSocket() {
+        webSocketTask = session.webSocketTask(with: websocketURL)
+        webSocketTask?.resume()
+    }
+    
     func receiveMessage() {
         webSocketTask?.receive { result in
             switch result {
@@ -36,20 +42,11 @@ private extension ObservableWebSocketService {
                 self.message = message
                 // Listen for the next message.
                 self.receiveMessage()
-
+                
             case .failure(let error):
                 let codableError = CodableError(error)
                 self.error = .receivingMessage(codableError)
             }
         }
-    }
-}
-
-// MARK: - Private
-
-private extension ObservableWebSocketService {
-    func initializeWebSocket() {
-        webSocketTask = session.webSocketTask(with: websocketURL)
-        webSocketTask?.resume()
     }
 }
