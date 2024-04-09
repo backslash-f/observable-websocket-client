@@ -18,7 +18,6 @@ public final class ObservableWebSocketClient: Identifiable, Equatable, Codable, 
     /// Publishes any error that may occur.
     @Published public var error: ObservableWebSocketClientError?
 
-#warning("TODO: isConnected logic")
     /// Publishes whether the WebSocket is still valid/alive.
     @Published public var isConnected: Bool = false
 
@@ -63,6 +62,7 @@ extension ObservableWebSocketClient {
 
         service.$message.sink { [weak self] message in
             if let message {
+                self?.isConnected = true
                 self?.codableMessage = CodableWebSocketMessage(message: message)
             }
         }
@@ -72,6 +72,7 @@ extension ObservableWebSocketClient {
 
         service.$error.sink { [weak self] error in
             if let error {
+                self?.isConnected = false
                 self?.error = error
             }
         }
