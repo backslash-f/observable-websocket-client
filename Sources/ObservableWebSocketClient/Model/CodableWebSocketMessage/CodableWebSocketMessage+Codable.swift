@@ -25,7 +25,9 @@ public extension CodableWebSocketMessage {
             let messageData = try container.decode(Data.self, forKey: .messageData)
             message = .data(messageData)
         default:
-            throw ObservableWebSocketClientError.decodingMessage
+            let localizedDescription = "Unknown message type"
+            let codableError = CodableError(localizedDescription: localizedDescription)
+            throw ObservableWebSocketClientError.decodingMessage(codableError)
         }
     }
 
@@ -40,7 +42,9 @@ public extension CodableWebSocketMessage {
             try container.encode("data", forKey: .messageType)
             try container.encode(messageData, forKey: .messageData)
         @unknown default:
-            throw ObservableWebSocketClientError.encodingMessage
+            let localizedDescription = "Unknown message type"
+            let codableError = CodableError(localizedDescription: localizedDescription)
+            throw ObservableWebSocketClientError.encodingMessage(codableError)
         }
     }
 }
