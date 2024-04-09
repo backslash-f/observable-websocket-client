@@ -25,8 +25,7 @@ public extension CodableWebSocketMessage {
             let messageData = try container.decode(Data.self, forKey: .messageData)
             message = .data(messageData)
         default:
-            let localizedDescription = "Unknown message type"
-            let codableError = CodableError(localizedDescription: localizedDescription)
+            let codableError = CodableWebSocketMessage.unknownMessageTypeError(isEncoding: false)
             throw ObservableWebSocketClientError.decodingMessage(codableError)
         }
     }
@@ -42,9 +41,23 @@ public extension CodableWebSocketMessage {
             try container.encode("data", forKey: .messageType)
             try container.encode(messageData, forKey: .messageData)
         @unknown default:
-            let localizedDescription = "Unknown message type"
-            let codableError = CodableError(localizedDescription: localizedDescription)
+            let codableError = CodableWebSocketMessage.unknownMessageTypeError(isEncoding: true)
             throw ObservableWebSocketClientError.encodingMessage(codableError)
         }
+    }
+}
+
+// MARK: - Private
+
+private extension CodableWebSocketMessage {
+    static func unknownMessageTypeError(isEncoding: Bool) -> CodableError {
+        let message = "Unknown message type"
+        return .init(
+            errorType: "Serialization",
+            description: message,
+            localizedDescription: message,
+            domain: isEncoding ? "Encoding" : "Decoding",
+            code: 0
+        )
     }
 }
