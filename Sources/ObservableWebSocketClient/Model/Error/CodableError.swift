@@ -22,7 +22,7 @@ public struct CodableError: Error, Codable, Equatable {
         self.domain = (error as NSError).domain
         self.code = (error as NSError).code
     }
-    
+
     internal init(errorType: String,
                   description: String,
                   localizedDescription: String,

@@ -11,7 +11,7 @@ import Foundation
 public struct CodableWebSocketMessage: Equatable, Codable, Identifiable {
     public let id = UUID()
     public let message: URLSessionWebSocketTask.Message
-    
+
     public init(message: URLSessionWebSocketTask.Message) {
         self.message = message
     }
