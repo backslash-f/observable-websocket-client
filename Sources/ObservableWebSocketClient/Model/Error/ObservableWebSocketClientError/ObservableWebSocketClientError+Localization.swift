@@ -10,12 +10,21 @@ import Foundation
 extension ObservableWebSocketClientError: LocalizedError {
     public var errorDescription: String? {
         switch self {
-        case .decodingMessage:
-            "There was an error while decoding a URLSessionWebSocketTask.Message."
-        case .encodingMessage:
-            "There was an error while encoding a URLSessionWebSocketTask.Message."
-        case .receivingMessage:
-            "There was an error while receiving a URLSessionWebSocketTask.Message."
+        case .decodingMessage(let error):
+            """
+            There was an error while decoding a WebSocket message:
+            \(error.localizedDescription)
+            """
+        case .encodingMessage(let error):
+            """
+            There was an error while encoding a WebSocket message:
+            \(error.localizedDescription)
+            """
+        case .receivingMessage(let error):
+            """
+            There was an error while receiving a WebSocket message:
+            \(error.localizedDescription)
+            """
         }
     }
 }
