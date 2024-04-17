@@ -8,7 +8,7 @@
 import Foundation
 
 public extension ObservableWebSocketClient {
-    
+
     /// Sends the WebSocket server the given message, as is.
     ///
     /// Message replies/errors can be observed via:
@@ -34,7 +34,7 @@ public extension ObservableWebSocketClient {
     func sendMessage(_ message: String) {
         service.send(message: message)
     }
-    
+
     /// Sends the WebSocket server a message including a dynamically generated ID.
     ///
     /// Message replies/errors can be observed via:
