@@ -18,7 +18,7 @@ public final class ObservableWebSocketService: ObservableObject {
     private let websocketURL: URL
 
     private var webSocketTask: URLSessionWebSocketTask?
-    
+
     // MARK: - Lifecycle
 
     public init(url: URL) {
@@ -31,7 +31,7 @@ public final class ObservableWebSocketService: ObservableObject {
 // MARK: - Interface
 
 public extension ObservableWebSocketService {
-    
+
     func send(message: String) {
         let wsMessage = URLSessionWebSocketTask.Message.string(message)
         webSocketTask?.send(wsMessage) { error in
