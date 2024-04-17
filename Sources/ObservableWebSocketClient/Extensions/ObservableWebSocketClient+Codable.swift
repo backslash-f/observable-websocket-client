@@ -17,6 +17,8 @@ extension ObservableWebSocketClient {
         case error
     }
 
+    // MARK: - Encode
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
@@ -24,6 +26,8 @@ extension ObservableWebSocketClient {
         try container.encodeIfPresent(codableMessage, forKey: .message)
         try container.encodeIfPresent(error, forKey: .error)
     }
+
+    // MARK: - Decode
 
     public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
