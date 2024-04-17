@@ -25,6 +25,11 @@ extension ObservableWebSocketClientError: LocalizedError {
             There was an error while receiving a WebSocket message:
             \(error.localizedDescription)
             """
+        case .sendingMessage(let error):
+            """
+            There was an error while sending a WebSocket message:
+            \(error.localizedDescription)
+            """
         }
     }
 }
