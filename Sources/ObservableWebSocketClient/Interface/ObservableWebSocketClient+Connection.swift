@@ -8,7 +8,7 @@
 import Foundation
 
 public extension ObservableWebSocketClient {
-    
+
     /// Sends a close frame with an optional close reason.
     ///
     /// - Parameter closeCode: A `URLSessionWebSocketTask.CloseCode`
