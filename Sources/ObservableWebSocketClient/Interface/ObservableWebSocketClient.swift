@@ -93,6 +93,7 @@ public final class ObservableWebSocketClient: Identifiable, Equatable, Codable, 
 
     deinit {
         pingTimer?.invalidate()
+        service.close()
     }
 }
 
