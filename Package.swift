@@ -14,8 +14,16 @@ let package = Package(
             targets: ["ObservableWebSocketClient"]
         )
     ],
+    dependencies: [
+        .package(url: "https://github.com/backslash-f/toolbox.git", from: "0.0.1")
+    ],
     targets: [
-        .target(name: "ObservableWebSocketClient"),
+        .target(
+            name: "ObservableWebSocketClient",
+            dependencies: [
+                .product(name: "Toolbox", package: "toolbox"),
+            ]
+        ),
         .testTarget(
             name: "ObservableWebSocketClientTests",
             dependencies: ["ObservableWebSocketClient"]
