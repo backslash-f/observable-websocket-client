@@ -26,7 +26,7 @@ public final class ObservableWebSocketClient: Identifiable, Equatable, Codable, 
 
     public let websocketURL: URL
 
-    private var pingTimer: Timer?
+    private(set) var pingTimer: Timer?
     private let pingTimerInterval: TimeInterval?
     private let pingMessage: String?
     private let pingMessageWithGeneratedId: ((String) -> String)?
@@ -93,8 +93,7 @@ public final class ObservableWebSocketClient: Identifiable, Equatable, Codable, 
     }
 
     deinit {
-        pingTimer?.invalidate()
-        service.close()
+        closeConnection()
     }
 }
 
