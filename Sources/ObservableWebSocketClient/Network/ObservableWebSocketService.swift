@@ -43,6 +43,11 @@ public extension ObservableWebSocketService {
             }
         }
     }
+
+    func close(with closeCode: URLSessionWebSocketTask.CloseCode = .normalClosure,
+               reason: String? = nil) {
+        webSocketTask?.cancel(with: closeCode, reason: reason?.data(using: .utf8))
+    }
 }
 
 // MARK: - Private
