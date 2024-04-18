@@ -21,7 +21,7 @@ let package = Package(
         .target(
             name: "ObservableWebSocketClient",
             dependencies: [
-                .product(name: "Toolbox", package: "toolbox"),
+                .product(name: "Toolbox", package: "toolbox")
             ]
         ),
         .testTarget(
