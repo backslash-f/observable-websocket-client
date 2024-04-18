@@ -23,10 +23,11 @@ extension ObservableWebSocketClient {
 
         // MARK: Errors
 
-        service.$error.sink { [weak self] error in
-            if let error {
+        service.$codableError.sink { [weak self] codableError in
+            if let codableError {
+                self?.pingTimer?.invalidate()
                 self?.isConnected = false
-                self?.error = error
+                self?.codableError = codableError
             }
         }
         .store(in: &cancellables)

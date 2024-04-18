@@ -14,6 +14,6 @@ extension ObservableWebSocketClient {
         lhs.websocketURL == rhs.websocketURL &&
         lhs.isConnected == rhs.isConnected &&
         lhs.codableMessage == rhs.codableMessage &&
-        lhs.error == rhs.error
+        lhs.codableError == rhs.codableError
     }
 }

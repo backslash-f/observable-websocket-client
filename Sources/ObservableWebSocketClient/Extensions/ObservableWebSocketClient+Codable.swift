@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Toolbox
 
 /// Required for encoding/decoding an observable object class. Refer to:
 /// https://www.hackingwithswift.com/books/ios-swiftui/encoding-an-observableobject-class
@@ -14,7 +15,7 @@ extension ObservableWebSocketClient {
         case id
         case websocketURL
         case message
-        case error
+        case codableError
     }
 
     // MARK: - Encode
@@ -24,7 +25,7 @@ extension ObservableWebSocketClient {
         try container.encode(id, forKey: .id)
         try container.encode(websocketURL, forKey: .websocketURL)
         try container.encodeIfPresent(codableMessage, forKey: .message)
-        try container.encodeIfPresent(error, forKey: .error)
+        try container.encodeIfPresent(codableError, forKey: .codableError)
     }
 
     // MARK: - Decode
@@ -34,7 +35,7 @@ extension ObservableWebSocketClient {
         let id = try container.decode(UUID.self, forKey: .id)
         let websocketURL = try container.decode(URL.self, forKey: .websocketURL)
         let message = try container.decodeIfPresent(CodableWebSocketMessage.self, forKey: .message)
-        let error = try container.decodeIfPresent(ObservableWebSocketClientError.self, forKey: .error)
-        self.init(id: id, websocketURL: websocketURL, message: message, error: error)
+        let codableError = try container.decodeIfPresent(CodableError.self, forKey: .codableError)
+        self.init(id: id, websocketURL: websocketURL, message: message, codableError: codableError)
     }
 }

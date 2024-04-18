@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import Toolbox
 
 /// Establishes a WebSocket connection using the given `websocketURL`.
 /// Publishes received messages and errors.
@@ -16,7 +17,7 @@ public final class ObservableWebSocketClient: Identifiable, Equatable, Codable, 
     @Published public var codableMessage: CodableWebSocketMessage?
 
     /// Publishes any error that may occur.
-    @Published public var error: ObservableWebSocketClientError?
+    @Published public var codableError: CodableError?
 
     /// Publishes whether the WebSocket is still valid/alive.
     @Published public var isConnected: Bool = false
@@ -46,7 +47,7 @@ public final class ObservableWebSocketClient: Identifiable, Equatable, Codable, 
     ///      wss://endpoint.com
     ///      ```
     ///   - message: Optional `CodableWebSocketMessage`. Useful for mocking the instance's state.
-    ///   - error: Optional `ObservableWebSocketClientError`. Useful for mocking the instance's state.
+    ///   - error: Optional `CodableError`. Useful for mocking the instance's state.
     ///   - pingTimerInterval: The value passed in (`TimeInterval`) will cause a timer to
     ///   continuously send ping-type messages to the WS server, keeping the connection alive.
     ///   - pingMessage: The ping-type `String` message.
@@ -74,14 +75,14 @@ public final class ObservableWebSocketClient: Identifiable, Equatable, Codable, 
     public init(id: UUID = .init(),
                 websocketURL: URL,
                 message: CodableWebSocketMessage? = nil,
-                error: ObservableWebSocketClientError? = nil,
+                codableError: CodableError? = nil,
                 pingTimerInterval: TimeInterval? = nil,
                 pingMessage: String? = nil,
                 pingMessageWithGeneratedId: ((String) -> String)? = nil) {
         self.id = id
         self.websocketURL = websocketURL
         self.codableMessage = message
-        self.error = error
+        self.codableError = codableError
         self.pingTimerInterval = pingTimerInterval
         self.pingMessage = pingMessage
         self.pingMessageWithGeneratedId = pingMessageWithGeneratedId

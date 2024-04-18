@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import Toolbox
 
 public final class ObservableWebSocketService: ObservableObject {
 
     @Published public var message: URLSessionWebSocketTask.Message?
 
-    @Published public var error: ObservableWebSocketClientError?
+    @Published public var codableError: CodableError?
 
     public var session = URLSession(configuration: .default)
 
@@ -37,8 +38,7 @@ public extension ObservableWebSocketService {
         webSocketTask?.send(wsMessage) { error in
             if let error {
                 Task { @MainActor in
-                    let codableError = CodableError(error)
-                    self.error = .sendingMessage(codableError)
+                    self.codableError = .init(error)
                 }
             }
         }
@@ -68,8 +68,7 @@ private extension ObservableWebSocketService {
                 self.receiveMessage()
 
             case .failure(let error):
-                let codableError = CodableError(error)
-                self.error = .receivingMessage(codableError)
+                self.codableError = .init(error)
             }
         }
     }
