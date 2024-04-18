@@ -6,12 +6,15 @@
 //
 
 import Foundation
+import Toolbox
 
 public extension CodableWebSocketMessage {
     enum CodingKeys: String, CodingKey {
         case messageType
         case messageData
     }
+
+    // MARK: - Decode
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -29,6 +32,8 @@ public extension CodableWebSocketMessage {
             throw ObservableWebSocketClientError.decodingMessage(codableError)
         }
     }
+
+    // MARK: - Encode
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)

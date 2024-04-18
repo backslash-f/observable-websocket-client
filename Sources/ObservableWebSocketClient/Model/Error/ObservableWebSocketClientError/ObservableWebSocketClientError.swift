@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import Toolbox
 
 public enum ObservableWebSocketClientError: Error, Equatable, Codable {
     case decodingMessage(CodableError)
     case encodingMessage(CodableError)
-    case receivingMessage(CodableError)
-    case sendingMessage(CodableError)
 }
