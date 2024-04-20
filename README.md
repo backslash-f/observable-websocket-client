@@ -7,3 +7,120 @@
 
 # Observable WebSocket Client ⚡
 A Swift package that establishes [WebSocket connections](https://en.wikipedia.org/wiki/WebSocket) and publishes received messages and errors from an [Observable Object](https://developer.apple.com/documentation/combine/observableobject).
+
+## Usage
+
+### Initialization
+
+```swift
+let websocketURL = URL(string: "wss://websocket-endpoint.com")!
+let wsClient = ObservableWebSocketClient(websocketURL: websocketURL)
+
+/*
+ A `URLSessionWebSocketTask` is created and resumed just after the
+ client initialization. Nothing else is required at this point.
+ */
+```
+
+### Observation
+
+#### Connection
+
+```swift
+wsClient
+    .$isConnected
+    .sink { isConnected in
+        print("isConnected: \(isConnected)")
+    }
+    .store(in: &cancellables)
+```
+
+#### Messages
+
+```swift
+wsClient
+    .$codableMessage
+    .compactMap{ $0 }
+    .sink { codableMessage in
+        print("Message: \(codableMessage.messageAsString())")
+        // codableMessage.message returns the original `URLSessionWebSocketTask.Message`
+    }
+    .store(in: &cancellables)
+```
+
+#### Errors
+
+```swift
+wsClient
+    .$codableError
+    .compactMap{ $0 }
+    .sink { codableError in
+        print("Error: \(codableError.description)")
+    }
+    .store(in: &cancellables)
+```
+
+### Ping/Pong 🏓
+
+#### Ping Message
+Passing in a `pingTimerInterval` will cause a timer to continuously send the given `pingMessage` to the WS server, keeping the connection alive:
+
+```swift
+let websocketURL = URL(string: "wss://endpoint.com")!
+let wsClient = ObservableWebSocketClient(
+    websocketURL: websocketURL,
+    pingTimerInterval: 18, // Every 18 seconds
+    pingMessage: "{\"type\": \"ping\"}" // The format is defined by the WS server
+)
+```
+
+#### Ping Message with Generated ID
+To generate a unique ID for the ping-type message, use the closure in `pingMessageWithGenerateId`. The closure takes a `String` (the generated unique ID), returns its modified version incorporating that ID, and sends the message to the WS server. As in the above, these steps are repeated continuously, generating unique IDs each time to keep the connection alive:
+
+```swift
+let websocketURL = URL(string: "wss://endpoint.com")!
+let wsClient = ObservableWebSocketClient(
+    websocketURL: websocketURL,
+    pingTimerInterval: 18, // Every 18 seconds
+    pingMessageWithGeneratedId: { generatedId in
+        "{\"id\": \"\(generatedId)\", \"type\": \"ping\"}"  // The format is defined by the WS server
+    }
+)
+```
+
+## Integration
+### Xcode
+Use Xcode's [built-in support for SPM](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app).
+
+*or...*
+
+### Package.swift
+In your `Package.swift`, add `ObservableWebSocketClient` as a dependency:
+
+```swift
+dependencies: [
+  .package(
+  	url: "https://github.com/backslash-f/observable-websocket-client",
+  	from: "1.0.0"
+  )
+]
+```
+
+Associate the dependency with your target:
+
+```swift
+targets: [
+  .target(
+    name: "YourAppName",
+    dependencies: [
+      .product(
+      	name: "ObservableWebSocketClient",
+      	package: "observable-websocket-client"
+      )
+    ]
+  )
+]
+```
+
+Run: `swift build`
+
