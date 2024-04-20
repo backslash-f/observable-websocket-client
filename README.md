@@ -87,6 +87,10 @@ let wsClient = ObservableWebSocketClient(
     }
 )
 ```
+## Demo
+In this demo app, the `ObservableWebSocketClient` connects to a [Kucoin WebSocket server](https://www.kucoin.com/docs/websocket/introduction) and sends `ping` messages every `pingTimerInterval` to keep the connection alive. The server responds with `welcome` and `pong` messages:
+
+https://github.com/backslash-f/observable-websocket-client/assets/664951/2c8897e4-6d25-413b-9f12-d61b32ebbf0d
 
 ## Integration
 ### Xcode
