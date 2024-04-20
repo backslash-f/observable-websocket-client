@@ -87,6 +87,14 @@ let wsClient = ObservableWebSocketClient(
     }
 )
 ```
+
+### Sending messages
+After the client is initialized and a connection is established, messages can be sent via the `ObservableWebSocketClient.sendMessage(_:)` API:
+
+```swift
+wsClient.sendMessage("A String WebSocket message")
+```
+
 ## Demo
 In this demo app, the `ObservableWebSocketClient` connects to a [Kucoin WebSocket server](https://www.kucoin.com/docs/websocket/introduction) and sends `ping` messages every `pingTimerInterval` to keep the connection alive. The server responds with `welcome` and `pong` messages:
 
