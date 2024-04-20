@@ -63,7 +63,7 @@ wsClient
 ### Ping/Pong 🏓
 
 #### Ping Message
-Passing in a `pingTimerInterval` will cause a timer to continuously send the given `pingMessage` to the WS server, keeping the connection alive:
+Passing in a `pingTimerInterval` during the client initialization will cause a timer to continuously send the given `pingMessage` to the WS server, keeping the connection alive:
 
 ```swift
 let websocketURL = URL(string: "wss://endpoint.com")!
@@ -75,7 +75,7 @@ let wsClient = ObservableWebSocketClient(
 ```
 
 #### Ping Message with Generated ID
-To generate a unique ID for the ping-type message, use the closure in `pingMessageWithGenerateId`. The closure takes a `String` (the generated unique ID), returns its modified version incorporating that ID, and sends the message to the WS server. As in the above, these steps are repeated continuously, generating unique IDs each time to keep the connection alive:
+To generate a unique ID for the ping-type message, use the closure in `pingMessageWithGenerateId`. The closure takes a `String` (the generated unique ID), returns a modified version of the message incorporating the ID, and sends it to the WS server. As in the above, these steps are repeated continuously using the interval indicated in the `pingTimerInterval`, generating unique IDs each time to keep the connection alive:
 
 ```swift
 let websocketURL = URL(string: "wss://endpoint.com")!
